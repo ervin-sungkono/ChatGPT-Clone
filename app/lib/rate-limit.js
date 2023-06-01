@@ -1,13 +1,13 @@
-import LRU from 'lru-cache'
+import { LRUCache } from "lru-cache"
 
 export default function rateLimit({...options}) {
-  const tokenCache = new LRU({
+  const tokenCache = new LRUCache({
     max: options?.uniqueTokenPerInterval || 500,
     ttl: options?.interval || 60000,
   })
 
   return {
-    check: (res, limit, token) =>
+    check: (headers, limit, token) =>
       new Promise((resolve, reject) => {
         const tokenCount = tokenCache.get(token) || [0]
         if (tokenCount[0] === 0) {
@@ -17,13 +17,11 @@ export default function rateLimit({...options}) {
 
         const currentUsage = tokenCount[0]
         const isRateLimited = currentUsage >= limit
-        res.headers.append('X-RateLimit-Limit', limit)
-        res.headers.append(
+        headers.set('X-RateLimit-Limit', limit)
+        headers.set(
           'X-RateLimit-Remaining',
           isRateLimited ? 0 : limit - currentUsage
         )
-
-        console.log(isRateLimited)
 
         return isRateLimited ? reject() : resolve()
       }),

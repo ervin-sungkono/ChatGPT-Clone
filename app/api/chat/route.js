@@ -19,17 +19,22 @@ const limiter = rateLimit({
 export async function POST(request){
     const { messages } = await request.json()
 
+    const newHeaders = new Headers({'content-type': 'application/json'})
+
     try{
-        await limiter.check(NextResponse.next(), 100, 'CACHE_TOKEN')
+        await limiter.check(newHeaders, 60, 'CACHE_TOKEN') // limit usage to 60 per interval
         const data = await fetch(url, {
             ...options,
             body: JSON.stringify({ messages })
         })
         .then(res => res.json())
-        if(data) return NextResponse.json(data)
-        return NextResponse.json({ message: "Bad Request" })
+        if(data) 
+        return new NextResponse(JSON.stringify(data), { 
+            headers: newHeaders
+        })
+        return NextResponse.json({ message: "Bad Request" }, { status: 400 })
     }catch(error){
         console.log(error)
-        return NextResponse.json({ message: error.message })
+        return NextResponse.json({ error: error.message }, { status: 400 })
     }
 }
