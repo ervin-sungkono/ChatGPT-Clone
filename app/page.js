@@ -1,16 +1,15 @@
-"use client"
-import { getChatResponse } from "./lib/api"
+import Sidebar from "./components/Sidebar";
+import ChatLayout from "./components/ChatLayout";
 
-export default async function Home() {
-
-  const fetchChat = async() => {
-    const chatResponse = await getChatResponse([{role: "user", content: "Hello"}])
-    console.log(chatResponse)
-  }
-  
+export default function Home() {
+  // const fetchChat = async() => {
+  //   const chatResponse = await getChatResponse([{role: "user", content: "Hello"}])
+  //   console.log(chatResponse)
+  // }
   return (
-    <main>
-      <button onClick={fetchChat}>Get Chat Data</button>
+    <main className="flex">
+      <Sidebar/>
+      <ChatLayout/>
     </main>
   )
 }
