@@ -1,7 +1,7 @@
 import './globals.css'
 import { Noto_Sans } from "next/font/google"
 
-import Providers from './components/Providers'
+import Providers from '../components/Providers'
 
 const notoSans = Noto_Sans({ 
   subsets: ['latin'],
@@ -10,7 +10,7 @@ const notoSans = Noto_Sans({
 
 export const metadata = {
   title: 'ChatGPT Clone',
-  description: 'A clone of ChatGPT\'s website UI',
+  description: 'A clone of ChatGPT\'s website UI'
 }
 
 export default function RootLayout({ children }) {

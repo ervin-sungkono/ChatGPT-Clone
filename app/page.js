@@ -1,5 +1,5 @@
-import Sidebar from "./components/Sidebar";
-import ChatLayout from "./components/ChatLayout";
+import Sidebar from "../components/Sidebar";
+import ChatLayout from "../components/ChatLayout";
 
 export default function Home() {
   // const fetchChat = async() => {
