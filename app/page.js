@@ -1,13 +1,18 @@
 "use client"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useLocalStorage from "@/app/lib/use-local-storage";
 
 import Sidebar from "../components/Sidebar";
 import ChatLayout from "../components/ChatLayout";
+import { initFlowbite } from "flowbite";
 
 export default function Home() {
   const [chatHistory, setChatHistory] = useLocalStorage('chat-history', [])
   const [activeChat, setActiveChat] = useState({})
+
+  useEffect(() => {
+    initFlowbite()
+  })
 
   const handleSetActiveChat = (chat) => {
     setActiveChat(chat)

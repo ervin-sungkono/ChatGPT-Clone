@@ -1,16 +1,10 @@
 "use client"
-import { useEffect } from "react"
-import { initDropdowns } from "flowbite"
 import Image from "next/image"
 
 import { AiOutlinePlus } from "@react-icons/all-files/ai/AiOutlinePlus"
 import { BsThreeDots } from "@react-icons/all-files/bs/BsThreeDots"
 
 export default function Sidebar(){
-    useEffect(() => {
-        initDropdowns()
-    })
-    
     return(
         <section className="relative w-[260px] h-screen flex flex-col gap-2 dark:bg-gray-900 p-2 group">
             <button className="w-full flex items-center gap-2 p-3 border dark:border-white/20 rounded-lg dark:hover:bg-white/5 transition-colors duration-300">
