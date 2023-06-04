@@ -69,6 +69,11 @@ export default function ChatLayout({ messages }){
         }
     ]
 
+    const handleFormSubmit = (e) => {
+        e.preventDefault()
+        console.log(document.getElementById('message').value)
+    }
+
     return(
         <section className="relative flex flex-col flex-grow h-screen bg-gray-800">
             <div className="w-full h-full md:max-w-2xl lg:max-w-3xl mx-auto">
@@ -83,16 +88,17 @@ export default function ChatLayout({ messages }){
                     <h2 className="text-4xl font-bold">ChatGPT</h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         {introductions.map(introduction => (
-                            <div className="flex flex-col gap-4">
+                            <div className="flex flex-col gap-4" key={introduction.title}>
                                 <div className="flex flex-col items-center text-center gap-2">
                                     {introduction.icon}
                                     <h3 className="text-lg">{introduction.title}</h3>
                                 </div>
                                 <div className="flex flex-col gap-3">
-                                    {introduction.data.map(entry => (
+                                    {introduction.data.map((entry, index) => (
                                         <div 
                                             className={`w-full p-3 dark:bg-white/5 rounded-md text-sm text-center ${entry.interactionType === 'click' && "dark:hover:bg-gray-900 cursor-pointer"}`}
                                             onClick={entry.interactionType === 'click' ? () => entry.onClick(entry.label) : null}
+                                            key={index}
                                         >
                                             {entry.interactionType === 'click' ? <>"{entry.label}"&nbsp;<span>→</span></> : entry.label}
                                         </div>
@@ -103,13 +109,15 @@ export default function ChatLayout({ messages }){
                     </div>
                 </div>} 
             </div>
-            <InputField
-                name={"message"}
-                placeholder={"Send a message.."}
-                value={text}
-                setValue={setText}
-                autoFocus
-            />
+            <form onSubmit={handleFormSubmit}>
+                <InputField
+                    name={"message"}
+                    placeholder={"Send a message.."}
+                    value={text}
+                    setValue={setText}
+                    autoFocus
+                />
+            </form>
         </section>
     )
 }
