@@ -5,29 +5,63 @@ import Link from "next/link"
 import Tooltip from "./Tooltip"
 import { AiFillFileText as TxtIcon } from "@react-icons/all-files/ai/AiFillFileText"
 import { IoSend as SendIcon } from "@react-icons/all-files/io5/IoSend"
+import { useEffect, useRef, useState } from "react"
 
 export default function InputField({ name, placeholder, value, setValue, autoFocus = false }){
+    const textAreaRef = useRef()
+    const uploadTxt = () => {
+        const fileInput = document.createElement('input')
+        fileInput.type = 'file'
+        fileInput.accept = '.txt'
+        fileInput.multiple = true
+        fileInput.onchange = _ => {
+            const files =   Array.from(fileInput.files)
+            files.forEach((file, index)=> {
+                const reader = new FileReader()
+                reader.onload = () => {
+                    setValue(prevValue => `${prevValue}${index > 0 ? "\n" : ""}${reader.result.trim()}`)
+                }
+                if(file) reader.readAsText(file)
+            })
+        }
+        fileInput.click()
+    }
+    useEffect(() => {
+        textAreaRef.current.dispatchEvent(new Event('input', {bubbles: true}))
+    }, [value])
     return(
         <div className="w-full flex flex-col gap-2 md:gap-3 items-center absolute bottom-0 left-0 px-4 pb-3 md:pb-6 bg-gradient-to-t from-gray-900/30">
             <div className="relative w-full flex items-end py-3 md:py-4 pl-4 md:max-w-2xl lg:max-w-3xl bg-gray-700 rounded-xl shadow-xs border border-white/0 focus-within:border-white/30">
-                <textarea 
+                <textarea
+                    id={name}
                     name={name}
+                    ref={textAreaRef}
                     placeholder={placeholder}
                     value={value}
                     rows={1}
                     data-min-rows="1"
                     className="auto_expand bg-transparent w-full p-0 pr-20 border-none focus:ring-0 resize-none h-auto max-h-[200px]"
                     onChange={(e) => setValue(e.target.value)}
-                    onInput={(e) => onExpandableTextareaInput(e)}
+                    onInput={(e) => {
+                        onExpandableTextareaInput(e)
+                    }}
+                    onKeyDown={(e) => {
+                        if(e.key === 'Enter' && !e.shiftKey){
+                            e.preventDefault()
+                            document.getElementById('submit-btn').click()
+                            e.target.value = ""
+                            onExpandableTextareaInput(e)
+                        }
+                    }}
                     autoFocus={autoFocus}
                 >
                 </textarea>
                 <div className="absolute right-3 bottom-3 flex gap-2">
                     <Tooltip content={"Add .txt file"}>
-                        <button type="button" className="p-2 bg-gray-900 rounded-md"><TxtIcon size={16}/></button>
+                        <button type="button" className="p-2 bg-gray-900 rounded-md" onClick={uploadTxt}><TxtIcon size={16}/></button>
                     </Tooltip>
                     <Tooltip content={"Send message"}>
-                        <button type="button" className="p-2 bg-green rounded-md"><SendIcon size={16}/></button>
+                        <button id="submit-btn" type="submit" className="p-2 bg-green rounded-md"><SendIcon size={16}/></button>
                     </Tooltip>
                 </div>
             </div>
