@@ -23,6 +23,11 @@ export async function POST(request){
 
     try{
         await limiter.check(newHeaders, 60, 'CACHE_TOKEN') // limit usage to 60 per interval
+    }catch(error){
+        return NextResponse.json({ message: "Exceeded daily usage limit" }, { status: 429 })
+    }
+
+    try{
         const data = await fetch(url, {
             ...options,
             body: JSON.stringify({ messages })
