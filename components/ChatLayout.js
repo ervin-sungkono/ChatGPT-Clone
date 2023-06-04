@@ -1,5 +1,7 @@
 import dynamic from "next/dynamic";
 import { useState } from "react";
+import { ReactMarkdown } from "react-markdown/lib/react-markdown"
+import remarkGfm from "remark-gfm"
 
 import { BsSun as SunIcon } from "@react-icons/all-files/bs/BsSun"
 import { BsLightningFill as LightningIcon } from "@react-icons/all-files/bs/BsLightningFill"
@@ -7,8 +9,9 @@ import { AiFillWarning as WarningIcon } from "@react-icons/all-files/ai/AiFillWa
 
 const InputField = dynamic(() => import("./InputField"))
 
-export default function ChatLayout({ messages }){
+export default function ChatLayout({ id, messages, handleInsertMessage }){
     const [text, setText] = useState("")
+
     const introductions = [
         {
             title: "Examples",
@@ -71,20 +74,22 @@ export default function ChatLayout({ messages }){
 
     const handleFormSubmit = (e) => {
         e.preventDefault()
-        console.log(document.getElementById('message').value)
+        handleInsertMessage(id, text.trim())
+        setText("")
     }
 
     return(
         <section className="relative flex flex-col flex-grow h-screen bg-gray-800">
-            <div className="w-full h-full md:max-w-2xl lg:max-w-3xl mx-auto">
-                {messages && messages.length > 0 ?
+            <div className="w-full h-full md:max-w-2xl lg:max-w-3xl mx-auto overflow-y-scroll">
+                {messages.length > 0 ?
                 <div className="w-full h-full flex flex-col">
                     {messages.map(message => (
-                        <></>
+                        <ReactMarkdown remarkPlugins={[remarkGfm]}>{message.content}</ReactMarkdown>
                     ))}
+                    <div className="w-full h-96"></div>
                 </div>
                 :
-                <div className="w-full h-full flex flex-col gap-16 px-6 pb-12 justify-center items-center">
+                <div className="w-full h-full flex flex-col gap-16 px-6 pt-[20vh] items-center">
                     <h2 className="text-4xl font-bold">ChatGPT</h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         {introductions.map(introduction => (

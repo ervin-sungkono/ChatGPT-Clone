@@ -31,7 +31,7 @@ export default function InputField({ name, placeholder, value, setValue, autoFoc
     }, [value])
     return(
         <div className="w-full flex flex-col gap-2 md:gap-3 items-center absolute bottom-0 left-0 px-4 pb-3 md:pb-6 bg-gradient-to-t from-gray-900/30">
-            <div className="relative w-full flex items-end py-3 md:py-4 pl-4 md:max-w-2xl lg:max-w-3xl bg-gray-700 rounded-xl shadow-xs border border-white/0 focus-within:border-white/30">
+            <div className="relative w-full flex items-end py-3 md:py-4 pl-4 lg:max-w-2xl xl:max-w-3xl bg-gray-700 rounded-xl shadow-xs border border-white/0 focus-within:border-white/30">
                 <textarea
                     id={name}
                     name={name}
@@ -49,8 +49,6 @@ export default function InputField({ name, placeholder, value, setValue, autoFoc
                         if(e.key === 'Enter' && !e.shiftKey){
                             e.preventDefault()
                             document.getElementById('submit-btn').click()
-                            e.target.value = ""
-                            onExpandableTextareaInput(e)
                         }
                     }}
                     autoFocus={autoFocus}
@@ -58,10 +56,10 @@ export default function InputField({ name, placeholder, value, setValue, autoFoc
                 </textarea>
                 <div className="absolute right-3 bottom-3 flex gap-2">
                     <Tooltip content={"Add .txt file"}>
-                        <button type="button" className="p-2 bg-gray-900 rounded-md" onClick={uploadTxt}><TxtIcon size={16}/></button>
+                        <button type="button" className="p-2 hover:bg-gray-900 rounded-md text-gray-400 transition-colors duration-200" onClick={uploadTxt}><TxtIcon size={16}/></button>
                     </Tooltip>
                     <Tooltip content={"Send message"}>
-                        <button id="submit-btn" type="submit" className="p-2 bg-green rounded-md"><SendIcon size={16}/></button>
+                        <button id="submit-btn" type="submit" className="p-2 disabled:bg-transparent disabled:text-gray-400/40 text-white bg-green rounded-md transition-colors duration-200" disabled={value.trim() === ""}><SendIcon size={16}/></button>
                     </Tooltip>
                 </div>
             </div>
