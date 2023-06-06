@@ -1,10 +1,15 @@
-export const getChatResponse = (messages) => {
-    const chat = fetch("/api/chat", {
+export const getChatResponse = async(messages) => {
+    const response = await fetch("/api/chat", {
         method: "POST",
+        headers: {
+            "content-type": 'application/json',
+        },
         body: JSON.stringify({ messages })
     })
-    .then(res => res.json())
-    .catch(err => console.log(err))
 
-    return chat
+    if (!response.ok) {
+        throw new Error(response.statusText)
+    }
+
+    return response.body
 }

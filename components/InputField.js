@@ -5,7 +5,7 @@ import Link from "next/link"
 import Tooltip from "./Tooltip"
 import { AiFillFileText as TxtIcon } from "@react-icons/all-files/ai/AiFillFileText"
 import { IoSend as SendIcon } from "@react-icons/all-files/io5/IoSend"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef } from "react"
 
 export default function InputField({ name, placeholder, value, setValue, autoFocus = false }){
     const textAreaRef = useRef()

@@ -9,7 +9,7 @@ import { AiFillWarning as WarningIcon } from "@react-icons/all-files/ai/AiFillWa
 
 const InputField = dynamic(() => import("./InputField"))
 
-export default function ChatLayout({ id, messages, handleInsertMessage }){
+export default function ChatLayout({ id, messages, handleFormSubmit }){
     const [text, setText] = useState("")
 
     const introductions = [
@@ -72,24 +72,18 @@ export default function ChatLayout({ id, messages, handleInsertMessage }){
         }
     ]
 
-    const handleFormSubmit = (e) => {
-        e.preventDefault()
-        handleInsertMessage(id, text.trim())
-        setText("")
-    }
-
     return(
         <section className="relative flex flex-col flex-grow h-screen bg-gray-800">
-            <div className="w-full h-full md:max-w-2xl lg:max-w-3xl mx-auto overflow-y-scroll">
+            <div className="w-full h-full overflow-y-scroll">
                 {messages.length > 0 ?
                 <div className="w-full h-full flex flex-col">
-                    {messages.map(message => (
-                        <ReactMarkdown remarkPlugins={[remarkGfm]}>{message.content}</ReactMarkdown>
+                    {messages.map((message, index) => (
+                        <ReactMarkdown remarkPlugins={[remarkGfm]} key={index}>{message.content}</ReactMarkdown>
                     ))}
                     <div className="w-full h-96"></div>
                 </div>
                 :
-                <div className="w-full h-full flex flex-col gap-16 px-6 pt-[20vh] items-center">
+                <div className="w-full h-full mx-auto md:max-w-2xl lg:max-w-3xl flex flex-col gap-16 px-6 pt-[20vh] items-center">
                     <h2 className="text-4xl font-bold">ChatGPT</h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         {introductions.map(introduction => (
@@ -105,7 +99,7 @@ export default function ChatLayout({ id, messages, handleInsertMessage }){
                                             onClick={entry.interactionType === 'click' ? () => entry.onClick(entry.label) : null}
                                             key={index}
                                         >
-                                            {entry.interactionType === 'click' ? <>"{entry.label}"&nbsp;<span>→</span></> : entry.label}
+                                            {entry.interactionType === 'click' ? <>&quot;{entry.label}&rdquo;&nbsp;<span>→</span></> : entry.label}
                                         </div>
                                     ))}
                                 </div>
@@ -114,7 +108,10 @@ export default function ChatLayout({ id, messages, handleInsertMessage }){
                     </div>
                 </div>} 
             </div>
-            <form onSubmit={handleFormSubmit}>
+            <form onSubmit={(e) => {
+                handleFormSubmit(e)
+                setText("")
+            }}>
                 <InputField
                     name={"message"}
                     placeholder={"Send a message.."}

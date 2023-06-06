@@ -13,8 +13,8 @@ export default function Sidebar({ chatHistory, handleSetActiveChat }){
 
     useEffect(() => {
         setTodayChat([...chatHistory].filter(chat => {
-            console.log(chat)
-            console.log(new Date(chat.created).toDateString())
+            // console.log(chat)
+            // console.log(new Date(chat.created).toDateString())
             return new Date(chat.created).toDateString() === new Date().toDateString()
         }))
     },[chatHistory])
@@ -33,7 +33,7 @@ export default function Sidebar({ chatHistory, handleSetActiveChat }){
                {todayChat.length > 0 && <div className="flex flex-col gap-2">
                     <p className="text-xs text-gray-500 font-semibold pt-2 px-3">Today</p>
                     {todayChat.map(chat => (
-                        <button className="cursor-pointer" onClick={() => handleSetActiveChat(chat)}>New Chat Generated {chat.chatId}</button>
+                        <button key={todayChat.chatId} className="cursor-pointer" onClick={() => handleSetActiveChat(chat)}>New Chat Generated {chat.chatId}</button>
                     ))}
                 </div>}
             </div> 

@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@react-icons/all-files": "^4.1.0",
+    "eventsource-parser": "^1.0.0",
     "flowbite": "^1.6.5",
     "flowbite-react": "^0.4.7",
     "lru-cache": "^9.1.1",
