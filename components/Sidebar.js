@@ -1,15 +1,24 @@
 "use client"
 import Image from "next/image"
+import Link from "next/link"
+import { useEffect, useState } from "react"
+import useLocalStorage from "@/app/lib/use-local-storage"
+import { initDropdowns } from "flowbite"
 
 import { AiOutlinePlus } from "@react-icons/all-files/ai/AiOutlinePlus"
 import { BsThreeDots } from "@react-icons/all-files/bs/BsThreeDots"
-import { useEffect, useState } from "react"
 
-export default function Sidebar({ chatHistory, handleSetActiveChat }){
+
+export default function Sidebar(){
+    const [chatHistory, setChatHistory] = useLocalStorage('chat-history', [])
     const [todayChat, setTodayChat] = useState([])
     const [yesterdayChat, setYesterdayChat] = useState([])
     const [lastWeekChat, setLastWeekChat] = useState([])
     const [lastMonthChat, setLastMonthChat] = useState([])
+
+    useEffect(() => {
+        initDropdowns()
+    })
 
     useEffect(() => {
         setTodayChat([...chatHistory].filter(chat => {
@@ -25,15 +34,17 @@ export default function Sidebar({ chatHistory, handleSetActiveChat }){
 
     return(
         <section className="relative w-[260px] h-screen flex flex-col gap-2 dark:bg-gray-900 p-2 group">
-            <button onClick={() => handleSetActiveChat(null)} className="w-full flex items-center gap-2 p-3 border dark:border-white/20 rounded-lg dark:hover:bg-white/5 transition-colors duration-300">
+            <Link href="/" className="w-full flex items-center gap-2 p-3 border dark:border-white/20 rounded-lg dark:hover:bg-white/5 transition-colors duration-300">
                 <AiOutlinePlus size={16}/>
                 <p className="text-sm font-medium">New Chat</p>
-            </button>
+            </Link>
             <div className="flex flex-col flex-grow overflow-hidden group-hover:overflow-y-scroll border-b dark:border-b-white/20">
                {todayChat.length > 0 && <div className="flex flex-col gap-2">
                     <p className="text-xs text-gray-500 font-semibold pt-2 px-3">Today</p>
                     {todayChat.map(chat => (
-                        <button key={todayChat.chatId} className="cursor-pointer" onClick={() => handleSetActiveChat(chat)}>New Chat Generated {chat.chatId}</button>
+                        <Link href={`/chat/${chat.chatId}`} key={chat.chatId}>
+                            <div>New Chat Generated {chat.chatId}</div>
+                        </Link>
                     ))}
                 </div>}
             </div> 
@@ -44,7 +55,7 @@ export default function Sidebar({ chatHistory, handleSetActiveChat }){
                 type="button"
             >
                 <div className="flex items-center gap-2">
-                    <Image src={"/placeholder_user.jpg"} width={20} height={20} alt="" className="rounded object-cover"/>
+                    <Image src={"/placeholder_user.jpg"} width={20} height={20} alt="" className="rounded-sm object-cover"/>
                     <p className="text-sm font-medium">Unknown User</p>
                 </div>
                 <BsThreeDots size={16} className="text-gray-500"/>
