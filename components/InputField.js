@@ -6,7 +6,7 @@ import { AiFillFileText as TxtIcon } from "@react-icons/all-files/ai/AiFillFileT
 import { IoSend as SendIcon } from "@react-icons/all-files/io5/IoSend"
 import { useEffect, useState, useRef } from "react"
 
-export default function InputField({ name, placeholder, autoFocus = false, disabled = false }){
+export default function InputField({ name, value, placeholder, autoFocus = false, disabled = false }){
     const textAreaRef = useRef()
     const [text, setText] = useState("")
     const uploadTxt = () => {
@@ -26,6 +26,7 @@ export default function InputField({ name, placeholder, autoFocus = false, disab
         }
         fileInput.click()
     }
+    useEffect(() => setText(value), [value])
     useEffect(() => {
         textAreaRef.current.dispatchEvent(new Event('input', {bubbles: true}))
     }, [text])
@@ -58,7 +59,14 @@ export default function InputField({ name, placeholder, autoFocus = false, disab
                     <button type="button" className="p-2 hover:bg-gray-900 rounded-md text-gray-400 transition-colors duration-200" onClick={uploadTxt}><TxtIcon size={16}/></button>
                 </Tooltip>
                 <Tooltip content={"Send message"}>
-                    <button id="submit-btn" type="submit" className="p-2 disabled:bg-transparent disabled:text-gray-400/40 text-white bg-green rounded-md transition-colors duration-200" disabled={text.trim() === ""}><SendIcon size={16}/></button>
+                    <button
+                        id="submit-btn" 
+                        type="submit"
+                        className="p-2 disabled:bg-transparent disabled:text-gray-400/40 text-white bg-green rounded-md transition-colors duration-200"
+                        disabled={disabled || text.trim() === ""}
+                    >
+                        <SendIcon size={16}/>
+                    </button>
                 </Tooltip>
             </div>
         </div>

@@ -2,35 +2,51 @@
 import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useState } from "react"
-import useLocalStorage from "@/app/lib/use-local-storage"
 import { initDropdowns } from "flowbite"
 
 import { AiOutlinePlus } from "@react-icons/all-files/ai/AiOutlinePlus"
 import { BsThreeDots } from "@react-icons/all-files/bs/BsThreeDots"
 
 
-export default function Sidebar(){
-    const [chatHistory, setChatHistory] = useLocalStorage('chat-history', [])
-    const [todayChat, setTodayChat] = useState([])
-    const [yesterdayChat, setYesterdayChat] = useState([])
-    const [lastWeekChat, setLastWeekChat] = useState([])
-    const [lastMonthChat, setLastMonthChat] = useState([])
+export default function Sidebar({ chatHistory }){
+    const [sortedChat, setSortedChat] = useState([])
 
     useEffect(() => {
         initDropdowns()
-    })
+    }, [])
+
+    const compareDate = (date) => {
+        const then = new Date(date)
+        const now = new Date()
+
+        const msBetweenDates = Math.abs(then.getTime() - now.getTime())
+        const daysBetweenDates = Math.floor(msBetweenDates / (24 * 60 * 60 * 1000)) // convert ms to days
+
+        return daysBetweenDates
+    }
 
     useEffect(() => {
-        setTodayChat([...chatHistory].filter(chat => {
-            // console.log(chat)
-            // console.log(new Date(chat.created).toDateString())
-            return new Date(chat.created).toDateString() === new Date().toDateString()
-        }))
+        const todayChat = []
+        const yesterdayChat = []
+        const lastWeekChat = []
+        const lastMonthChat = []
+        const olderChat = []
+        chatHistory.forEach(chat => {
+            const days = compareDate(chat.created)
+            if(days === 0) todayChat.push(chat)
+            else if(days === 1) yesterdayChat.push(chat)
+            else if(days <= 7) lastWeekChat.push(chat)
+            else if(days <= 30) lastMonthChat.push(chat)
+            else olderChat.push(chat)
+        })
+        setSortedChat([
+            {label: "Today", data: todayChat},
+            {label: "Yesterday", data: yesterdayChat},
+            {label: "Last 7 days", data: lastWeekChat},
+            {label: "Last 30 days", data: lastMonthChat},
+            {label: "Older chats", data: olderChat}
+        ])
     },[chatHistory])
-
-    useEffect(() => {
-        console.log(todayChat)
-    }, [todayChat])
 
     return(
         <section className="relative w-[260px] h-screen flex flex-col gap-2 dark:bg-gray-900 p-2 group">
@@ -39,14 +55,20 @@ export default function Sidebar(){
                 <p className="text-sm font-medium">New Chat</p>
             </Link>
             <div className="flex flex-col flex-grow overflow-hidden group-hover:overflow-y-scroll border-b dark:border-b-white/20">
-               {todayChat.length > 0 && <div className="flex flex-col gap-2">
-                    <p className="text-xs text-gray-500 font-semibold pt-2 px-3">Today</p>
-                    {todayChat.map(chat => (
-                        <Link href={`/chat/${chat.chatId}`} key={chat.chatId}>
-                            <div>New Chat Generated {chat.chatId}</div>
-                        </Link>
-                    ))}
-                </div>}
+               {sortedChat && sortedChat.map(chats => (
+                <>
+                    {chats.data.length > 0 && <div className="flex flex-col gap-2">
+                        <p className="text-xs text-gray-500 font-semibold pt-2 px-3">{chats.label}</p>
+                        {chats.data.map(chat => (
+                            <Link href={`/chat/${chat.chatId}`} key={chat.chatId}>
+                                <div>New Chat Generated</div>
+                            </Link>
+                        ))}
+                    </div>}
+                </>
+               ))}
+
+               
             </div> 
             <button 
                 id="profileDropdownButton"

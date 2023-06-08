@@ -21,3 +21,37 @@
 ::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
+
+@keyframes blink {
+    to {
+      visibility: hidden;
+    }
+}
+
+.markdown ol,
+.markdown ul,
+.markdown menu{
+    list-style: initial;
+}
+
+​.markdown{
+    white-space: pre-wrap;
+}
+
+@layer components{
+    .markdown p{
+        @apply text-sm md:text-base dark:text-gray-100
+    }
+}
+
+
+.streaming > :not(ol):not(ul):not(pre):last-child:after,
+.streaming > ol:last-child li:last-child:after,
+.streaming > pre:last-child code:after,
+.streaming > ul:last-child li:last-child:after {
+    -webkit-animation: blink 1s steps(5, start) infinite;
+    animation: blink 1s steps(5, start) infinite;
+    content: '▋';
+    margin-left: 0.25rem;
+    vertical-align: baseline;
+}

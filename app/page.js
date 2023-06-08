@@ -1,12 +1,15 @@
-import dynamic from "next/dynamic"
-const Sidebar = dynamic(() => import("../components/Sidebar"))
-const ChatLayout = dynamic(() => import("../components/ChatLayout"))
+"use client"
+import useLocalStorage from "./lib/hooks/use-local-storage"
+
+import Sidebar from "@/components/Sidebar"
+import ChatLayout from "@/components/ChatLayout"
 
 export default function Page() {
+  const [chatHistory, setChatHistory] = useLocalStorage('chat-history', [])
   return (
     <main className="flex">
-      <Sidebar/>
-      <ChatLayout/>
+      <Sidebar chatHistory={chatHistory}/>
+      <ChatLayout chatHistory={chatHistory} setChatHistory={setChatHistory}/>
     </main>
   )
 }
