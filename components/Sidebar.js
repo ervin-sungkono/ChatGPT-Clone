@@ -7,8 +7,9 @@ import { initDropdowns } from "flowbite"
 import { AiOutlinePlus } from "@react-icons/all-files/ai/AiOutlinePlus"
 import { BsThreeDots } from "@react-icons/all-files/bs/BsThreeDots"
 
+import ChatLink from "./ChatLink"
 
-export default function Sidebar({ chatHistory }){
+export default function Sidebar({ chatId, chatHistory }){
     const [sortedChat, setSortedChat] = useState([])
 
     useEffect(() => {
@@ -19,8 +20,8 @@ export default function Sidebar({ chatHistory }){
         const then = new Date(date)
         const now = new Date()
 
-        const msBetweenDates = Math.abs(then.getTime() - now.getTime())
-        const daysBetweenDates = Math.floor(msBetweenDates / (24 * 60 * 60 * 1000)) // convert ms to days
+        const msDay = (24 * 60 * 60 * 1000)
+        const daysBetweenDates = Math.abs(Math.floor(then.getTime()/msDay) - Math.floor(now.getTime()/msDay))
 
         return daysBetweenDates
     }
@@ -54,21 +55,17 @@ export default function Sidebar({ chatHistory }){
                 <AiOutlinePlus size={16}/>
                 <p className="text-sm font-medium">New Chat</p>
             </Link>
-            <div className="flex flex-col flex-grow overflow-hidden group-hover:overflow-y-scroll border-b dark:border-b-white/20">
-               {sortedChat && sortedChat.map(chats => (
-                <>
-                    {chats.data.length > 0 && <div className="flex flex-col gap-2">
-                        <p className="text-xs text-gray-500 font-semibold pt-2 px-3">{chats.label}</p>
-                        {chats.data.map(chat => (
-                            <Link href={`/chat/${chat.chatId}`} key={chat.chatId}>
-                                <div>New Chat Generated</div>
-                            </Link>
-                        ))}
-                    </div>}
-                </>
+            <div className="flex flex-col flex-grow overflow-y-auto -mr-2 border-b dark:border-b-white/20">
+               {sortedChat && sortedChat.map(chats => chats.data.length > 0 && (
+                     <div className="flex flex-col gap-2 h-auto" key={chats.label}>
+                        <p className="text-xs text-gray-500 font-semibold pt-2 px-3 sticky top-0">{chats.label}</p>
+                        <div className="flex flex-col">
+                            {chats.data.map(chat => (
+                                <ChatLink chat={chat} active={chat.chatId === chatId} key={chat.chatId}/>
+                            ))}
+                        </div>
+                    </div>
                ))}
-
-               
             </div> 
             <button 
                 id="profileDropdownButton"
