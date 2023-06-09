@@ -4,6 +4,7 @@
 
 ::-webkit-scrollbar {
     width: 8px;
+    height: 8px;
 }
 
 /* Track */
@@ -32,10 +33,6 @@
 .markdown ul,
 .markdown menu{
     list-style: initial;
-}
-
-​.markdown{
-    white-space: pre-wrap;
 }
 
 @layer components{
