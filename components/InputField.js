@@ -4,11 +4,10 @@ import { onExpandableTextareaInput } from "@/app/lib/textarea-expandable"
 import Tooltip from "./Tooltip"
 import { AiFillFileText as TxtIcon } from "@react-icons/all-files/ai/AiFillFileText"
 import { IoSend as SendIcon } from "@react-icons/all-files/io5/IoSend"
-import { useEffect, useState, useRef } from "react"
+import { useEffect, useRef } from "react"
 
-export default function InputField({ name, value, placeholder, autoFocus = false, disabled = false }){
+export default function InputField({ name, value, setValue, placeholder, autoFocus = false, disabled = false }){
     const textAreaRef = useRef()
-    const [text, setText] = useState("")
     const uploadTxt = () => {
         const fileInput = document.createElement('input')
         fileInput.type = 'file'
@@ -19,17 +18,16 @@ export default function InputField({ name, value, placeholder, autoFocus = false
             files.forEach((file, index)=> {
                 const reader = new FileReader()
                 reader.onload = () => {
-                    setText(prevValue => `${prevValue}${index > 0 ? "\n" : ""}${reader.result.trim()}`)
+                    setValue(prevValue => `${prevValue}${index > 0 ? "\n" : ""}${reader.result.trim()}`)
                 }
                 if(file) reader.readAsText(file)
             })
         }
         fileInput.click()
     }
-    useEffect(() => setText(value), [value])
     useEffect(() => {
         textAreaRef.current.dispatchEvent(new Event('input', {bubbles: true}))
-    }, [text])
+    }, [value])
     return(
         <div className="relative w-full flex items-end py-3 md:py-4 pl-4 bg-gray-700 rounded-xl shadow-md border border-white/0 focus-within:border-white/30">
             <textarea
@@ -37,11 +35,11 @@ export default function InputField({ name, value, placeholder, autoFocus = false
                 name={name}
                 ref={textAreaRef}
                 placeholder={placeholder}
-                value={text}
+                value={value}
                 rows={1}
                 data-min-rows="1"
                 className="auto_expand bg-transparent w-full p-0 pr-20 border-none focus:ring-0 resize-none h-auto max-h-[200px]"
-                onChange={(e) => setText(e.target.value)}
+                onChange={(e) => setValue(e.target.value)}
                 onInput={(e) => {
                     onExpandableTextareaInput(e)
                 }}
@@ -63,7 +61,7 @@ export default function InputField({ name, value, placeholder, autoFocus = false
                         id="submit-btn" 
                         type="submit"
                         className="p-2 disabled:bg-transparent disabled:text-gray-400/40 text-white bg-green rounded-md transition-colors duration-200"
-                        disabled={disabled || text.trim() === ""}
+                        disabled={disabled || value.trim() === ""}
                     >
                         <SendIcon size={16}/>
                     </button>

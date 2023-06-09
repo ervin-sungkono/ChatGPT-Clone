@@ -1,22 +1,19 @@
 "use client"
 import dynamic from "next/dynamic"
-import Link from "next/link"
+
 import { useRouter } from "next/navigation"
 import { useState, useEffect, useRef } from "react"
 import { getChatResponse } from "@/app/lib/api"
 
-import { FiRefreshCcw } from "@react-icons/all-files/fi/FiRefreshCcw"
-
-const InputField = dynamic(() => import("./InputField"))
 const ChatBox = dynamic(() => import("./ChatBox"))
+const ChatInput = dynamic(() => import("./ChatInput"))
 const IntroSection = dynamic(() => import("./IntroSection"))
-const Button = dynamic(() => import("./Button"))
 
 export default function ChatLayout({ chatId, chatHistory, setChatHistory }){
     const router = useRouter()
     const [messages, setMessages] = useState([])
+    const [text, setText] = useState("")
     const [id, setId] = useState(chatId)
-    const [textAreaValue, setTextAreaValue] = useState("")
     const [loading, setLoading] = useState(false)
 
     const bottomRef = useRef()
@@ -43,6 +40,7 @@ export default function ChatLayout({ chatId, chatHistory, setChatHistory }){
                 setChatHistory([
                     ...chatHistory,
                     {
+                        title: messages[0].content.slice(0,255),
                         chatId,
                         messages: messages,
                         created: Date.now()
@@ -100,6 +98,7 @@ export default function ChatLayout({ chatId, chatHistory, setChatHistory }){
     }
 
     const regenerateMessage = async() => {
+        if(messages.length === 0) return
         setLoading(true)
 
         setMessages(prevMessages => ([
@@ -111,12 +110,12 @@ export default function ChatLayout({ chatId, chatHistory, setChatHistory }){
         setLoading(false)
     }
     
-    const handleFormSubmit = async(e) => {
+    const handleFormSubmit = async(e, callback) => {
         e.preventDefault()
         setLoading(true)
         
         const message = new FormData(e.target).get("message")
-        setTextAreaValue("")
+        setText("")
         setMessages(prevMessages => ([
             ...prevMessages,
             {role: "user", content: message},
@@ -131,34 +130,17 @@ export default function ChatLayout({ chatId, chatHistory, setChatHistory }){
         <section className="relative flex flex-col flex-grow h-screen bg-gray-800">
             <div className="w-full h-full">
                 {id || messages.length > 0 ?
-                <div className="w-full h-screen flex flex-col overflow-y-auto">
+                <div className="w-full h-full flex flex-col overflow-y-auto">
                     {messages.map((message, index) => (
                         <ChatBox role={message.role} content={message.content} streaming={loading && index === messages.length - 1} key={index}/>
                     ))}
                     <div ref={bottomRef} className="h-32 md:h-48 flex-shrink-0"></div>
                 </div>
                 :
-                <IntroSection handleClick={setTextAreaValue}/>} 
+                <IntroSection handleClick={setText}/>} 
             </div>
-            <div className="absolute w-full h-32 md:h-48 bottom-0 bg-gradient-to-t from-gray-800 via-gray-800 via-40% to-transparent"></div>
-            <div className="w-full flex flex-col gap-2 md:gap-3 items-center absolute bottom-0 left-0 px-4 pb-3 md:pb-6 bg-gradient-to-t from-gray-800">
-                <Button label={"Regenerate response"} icon={<FiRefreshCcw size={12}/>} onClick={regenerateMessage}/>
-                <form 
-                    onSubmit={handleFormSubmit}
-                    className="w-full lg:max-w-2xl xl:max-w-3xl"
-                >
-                    <InputField
-                        name={"message"}
-                        value={textAreaValue}
-                        placeholder={"Send a message.."}
-                        autoFocus
-                        disabled={loading}
-                    />
-                </form>
-                <p className="text-xs text-gray-300 text-center">
-                    Educational purposes only, made by <span className="underline"><Link href={"https://github.com/ervin-sungkono"} target="_blank">Ervin Cahyadinata Sungkono.</Link></span> Visit the original ChatGPT website <span className="underline"><Link href={"https://chat.openai.com"} target="_blank">here</Link></span>
-                </p>
-            </div>
+            <div className="absolute w-full h-32 md:h-48 bottom-0 bg-gradient-to-t from-gray-800 via-gray-800/70 via-50% to-transparent"></div>
+            <ChatInput onSubmit={handleFormSubmit} regenerateMessage={regenerateMessage} showButton={(messages.length > 0)} loading={loading} text={text} setText={setText}/>
         </section>
     )
 }
