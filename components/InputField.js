@@ -38,7 +38,7 @@ export default function InputField({ name, value, setValue, placeholder, autoFoc
                 value={value}
                 rows={1}
                 data-min-rows="1"
-                className="auto_expand bg-transparent w-full p-0 pr-20 border-none focus:ring-0 resize-none h-auto max-h-[200px]"
+                className="auto_expand bg-transparent w-full p-0 pr-20 border-none focus:ring-0 resize-none h-auto md:max-h-[200px] text-sm md:text-base"
                 onChange={(e) => setValue(e.target.value)}
                 onInput={(e) => {
                     onExpandableTextareaInput(e)
@@ -52,7 +52,7 @@ export default function InputField({ name, value, setValue, placeholder, autoFoc
                 autoFocus={autoFocus}
             >
             </textarea>
-            <div className="absolute right-3 bottom-3 flex gap-2">
+            <div className="absolute right-2 md:right-3 bottom-1.5 md:bottom-3 flex gap-1 md:gap-2">
                 <Tooltip content={"Add .txt file"}>
                     <button type="button" className="p-2 hover:bg-gray-900 rounded-md text-gray-400 transition-colors duration-200" onClick={uploadTxt}><TxtIcon size={16}/></button>
                 </Tooltip>

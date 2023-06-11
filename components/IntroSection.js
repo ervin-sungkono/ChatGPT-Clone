@@ -60,16 +60,16 @@ export default function IntroSection({ handleClick }){
         }
     ]
     return(
-        <div className="w-full h-full mx-auto md:max-w-2xl lg:max-w-3xl flex flex-col gap-16 px-6 pt-[20vh] items-center">
+        <div className="w-full h-full mx-auto md:max-w-2xl lg:max-w-3xl flex flex-col gap-12 md:gap-16 px-6 pt-16 md:pt-[20vh] items-center">
             <h2 className="text-4xl font-bold">ChatGPT</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-4">
                 {introductions.map(introduction => (
-                    <div className="flex flex-col gap-4" key={introduction.title}>
-                        <div className="flex flex-col items-center text-center gap-2">
+                    <div className="flex flex-col items-center gap-4" key={introduction.title}>
+                        <div className="flex flex-row md:flex-col items-center text-center gap-2">
                             {introduction.icon}
                             <h3 className="text-lg">{introduction.title}</h3>
                         </div>
-                        <div className="flex flex-col gap-3">
+                        <div className="w-full flex flex-col gap-3">
                             {introduction.data.map((entry, index) => (
                                 <div 
                                     className={`w-full p-3 dark:bg-white/5 rounded-md text-sm text-center ${entry.interactionType === 'click' && "dark:hover:bg-gray-900 cursor-pointer"}`}
@@ -83,6 +83,7 @@ export default function IntroSection({ handleClick }){
                     </div>
                 ))}
             </div>
+            <div className="md:hidden h-32 md:h-48 flex-shrink-0"></div>
         </div>
     )
 }

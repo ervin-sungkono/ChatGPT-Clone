@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation"
 import { useState, useEffect, useRef } from "react"
 import { getChatResponse } from "@/app/lib/api"
 
+import { BiArrowToBottom } from "@react-icons/all-files/bi/BiArrowToBottom"
+
 const ChatBox = dynamic(() => import("./ChatBox"))
 const ChatInput = dynamic(() => import("./ChatInput"))
 const IntroSection = dynamic(() => import("./IntroSection"))
@@ -67,7 +69,7 @@ export default function ChatLayout({ chatId, chatHistory, setChatHistory }){
     const scrollToBottom = () => {
         if(!bottomRef.current) return
         bottomRef.current.scrollIntoView({
-            behaviour: "smooth",
+            behavior: "smooth",
             block: "end"
         })
     }
@@ -127,17 +129,20 @@ export default function ChatLayout({ chatId, chatHistory, setChatHistory }){
     }
 
     return(
-        <section className="relative flex flex-col flex-grow h-screen bg-gray-800">
-            <div className="w-full h-full">
-                {id || messages.length > 0 ?
+        <section className="relative flex flex-col flex-grow h-screen overflow-x-hidden bg-gray-800">
+            <div className="relative w-full h-full">
                 <div className="w-full h-full flex flex-col overflow-y-auto">
-                    {messages.map((message, index) => (
-                        <ChatBox role={message.role} content={message.content} streaming={loading && index === messages.length - 1} key={index}/>
-                    ))}
+                    {id || messages.length > 0 ?
+                        messages.map((message, index) => (
+                            <ChatBox role={message.role} content={message.content} streaming={loading && index === messages.length - 1} key={index}/>
+                        )) :
+                        <IntroSection handleClick={setText}/>
+                    }
                     <div ref={bottomRef} className="h-32 md:h-48 flex-shrink-0"></div>
+                    <button onClick={scrollToBottom} className="absolute bottom-32 md:bottom-[120px] right-4 rounded-full dark:bg-white/10 border dark:border-white/10 p-1 z-50">
+                        <BiArrowToBottom size={20}/>
+                    </button>
                 </div>
-                :
-                <IntroSection handleClick={setText}/>} 
             </div>
             <div className="absolute w-full h-32 md:h-48 bottom-0 bg-gradient-to-t from-gray-800 via-gray-800/70 via-50% to-transparent"></div>
             <ChatInput onSubmit={handleFormSubmit} regenerateMessage={regenerateMessage} showButton={(messages.length > 0)} loading={loading} text={text} setText={setText}/>
