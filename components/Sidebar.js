@@ -65,9 +65,9 @@ export default function Sidebar({ chatId, chatHistory }){
                     <AiOutlinePlus size={20}/>
                 </Link>
             </div>
-            <div className="absolute top-0 left-0 w-full h-full bg-black"></div>
+            <div className={`fixed top-0 left-0 w-full h-full bg-gray-600/70 z-50 ${showSidebar ? "opacity-1": "opacity-0 pointer-events-none"} transition-opacity duration-300 md:hidden`}></div>
             <div className={`absolute top-0 left-0 ${showSidebar ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 md:static w-[260px] h-screen flex flex-col gap-2 dark:bg-gray-900 p-2 z-50 group transition-transform duration-300`}>
-                <button className={`${showSidebar ? "block": "hidden"} absolute top-2 -right-2 translate-x-full z-50 p-[10px] focus:ring-2 ring-white flex justify-center items-center transition-opacity duration-300`} onClick={() => setShowSidebar(false)}>
+                <button className={`${showSidebar ? "opacity-1": "opacity-0 pointer-events-none"} absolute top-2 -right-2 translate-x-full z-50 p-[10px] focus:ring-2 ring-white flex justify-center items-center transition-opacity duration-300`} onClick={() => setShowSidebar(false)}>
                     <AiOutlineClose size={20}/>
                 </button>
                 <Link href="/" className="w-full flex items-center gap-2 p-3 border dark:border-white/20 rounded-lg dark:hover:bg-white/5 transition-colors duration-300">
@@ -76,14 +76,14 @@ export default function Sidebar({ chatId, chatHistory }){
                 </Link>
                 <div className="flex flex-col flex-grow overflow-y-auto -mr-2 border-b dark:border-b-white/20">
                 {sortedChat && sortedChat.map(chats => chats.data.length > 0 && (
-                        <div className="flex flex-col gap-2 h-auto" key={chats.label}>
-                            <p className="text-xs text-gray-500 font-semibold pt-2 px-3 sticky top-0">{chats.label}</p>
-                            <div className="flex flex-col">
-                                {chats.data.map(chat => (
-                                    <ChatLink chat={chat} active={chat.chatId === chatId} key={chat.chatId}/>
-                                ))}
-                            </div>
+                    <div className="flex flex-col gap-2 h-auto" key={chats.label}>
+                        <p className="text-xs text-gray-500 font-semibold pt-2 px-3 sticky top-0">{chats.label}</p>
+                        <div className="flex flex-col">
+                            {chats.data.map(chat => (
+                                <ChatLink chat={chat} active={chat.chatId === chatId} key={chat.chatId}/>
+                            ))}
                         </div>
+                    </div>
                 ))}
                 </div> 
                 <button 

@@ -17,6 +17,7 @@ export default function ChatLayout({ chatId, chatHistory, setChatHistory }){
     const [text, setText] = useState("")
     const [id, setId] = useState(chatId)
     const [loading, setLoading] = useState(false)
+    const [isBottom, setIsBottom] = useState(true)
 
     const bottomRef = useRef()
     
@@ -74,6 +75,13 @@ export default function ChatLayout({ chatId, chatHistory, setChatHistory }){
         })
     }
 
+    const checkBottom = (e) => {
+        const el = e.target
+        const scrollableHeight = el.scrollHeight - el.clientHeight
+
+        setIsBottom(el.scrollTop >= scrollableHeight)
+    }
+
     const sendMessage = async(message, regenerate = true) => {
         const content = regenerate ? messages.slice(-1)[0].content : message
         const chat = await getChatResponse(regenerate ? [...messages.slice(0,-1)] : [...messages, {role: "user", content: content}])
@@ -112,7 +120,7 @@ export default function ChatLayout({ chatId, chatHistory, setChatHistory }){
         setLoading(false)
     }
     
-    const handleFormSubmit = async(e, callback) => {
+    const handleFormSubmit = async(e) => {
         e.preventDefault()
         setLoading(true)
         
@@ -131,7 +139,8 @@ export default function ChatLayout({ chatId, chatHistory, setChatHistory }){
     return(
         <section className="relative flex flex-col flex-grow h-screen overflow-x-hidden bg-gray-800">
             <div className="relative w-full h-full">
-                <div className="w-full h-full flex flex-col overflow-y-auto">
+                <div className="w-full h-full flex flex-col overflow-y-auto" onScroll={checkBottom}>
+                    <div className="h-[44px] block md:hidden flex-shrink-0"></div>
                     {id || messages.length > 0 ?
                         messages.map((message, index) => (
                             <ChatBox role={message.role} content={message.content} streaming={loading && index === messages.length - 1} key={index}/>
@@ -139,9 +148,9 @@ export default function ChatLayout({ chatId, chatHistory, setChatHistory }){
                         <IntroSection handleClick={setText}/>
                     }
                     <div ref={bottomRef} className="h-32 md:h-48 flex-shrink-0"></div>
-                    <button onClick={scrollToBottom} className="absolute bottom-32 md:bottom-[120px] right-4 rounded-full dark:bg-white/10 border dark:border-white/10 p-1 z-50">
+                    {!isBottom && <button onClick={scrollToBottom} className="absolute bottom-32 md:bottom-[120px] right-4 md:right-6 rounded-full dark:bg-white/10 border dark:border-white/10 p-1 z-30">
                         <BiArrowToBottom size={20}/>
-                    </button>
+                    </button>}
                 </div>
             </div>
             <div className="absolute w-full h-32 md:h-48 bottom-0 bg-gradient-to-t from-gray-800 via-gray-800/70 via-50% to-transparent"></div>

@@ -22,7 +22,7 @@ function ChatBox({ role, content, streaming = false }){
                     : 
                     <Image src="/gpt_profile.png" alt="" fill className="object-cover"/>}
                 </div>
-                <div className={`markdown ${streaming ? 'streaming' : ""} flex flex-grow flex-col gap-4`}>
+                <div className={`markdown ${streaming ? 'streaming' : ""} flex flex-grow flex-col gap-4 text-sm md:text-base`}>
                     <ReactMarkdown 
                         remarkPlugins={[remarkGfm]}
                         components={{
