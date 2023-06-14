@@ -137,7 +137,7 @@ export default function ChatLayout({ chatId, chatHistory, setChatHistory }){
     }
 
     return(
-        <section className="relative flex flex-col flex-grow h-screen overflow-x-hidden bg-gray-800">
+        <section className="relative flex flex-col flex-grow h-screen overflow-x-hidden dark:bg-gray-800">
             <div className="relative w-full h-full">
                 <div className="w-full h-full flex flex-col overflow-y-auto" onScroll={checkBottom}>
                     <div className="h-[44px] block md:hidden flex-shrink-0"></div>
@@ -153,7 +153,7 @@ export default function ChatLayout({ chatId, chatHistory, setChatHistory }){
                     </button>}
                 </div>
             </div>
-            <div className="absolute w-full h-32 md:h-48 bottom-0 bg-gradient-to-t from-gray-800 via-gray-800/70 via-50% to-transparent"></div>
+            <div className="absolute w-full h-32 md:h-48 bottom-0 bg-gradient-to-t from-gray-200 via-gray-200/70 dark:from-gray-800 dark:via-gray-800/70 via-50% to-transparent"></div>
             <ChatInput onSubmit={handleFormSubmit} regenerateMessage={regenerateMessage} showButton={(messages.length > 0)} loading={loading} text={text} setText={setText}/>
         </section>
     )

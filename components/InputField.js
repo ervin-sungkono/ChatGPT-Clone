@@ -29,7 +29,7 @@ export default function InputField({ name, value, setValue, placeholder, autoFoc
         textAreaRef.current.dispatchEvent(new Event('input', {bubbles: true}))
     }, [value])
     return(
-        <div className="relative w-full flex items-end py-3 md:py-4 pl-4 bg-gray-700 rounded-xl shadow-md border border-white/0 focus-within:border-white/30">
+        <div className="relative w-full flex items-end py-3 md:py-4 pl-4 dark:bg-gray-700 rounded-xl shadow-md border border-black/0 focus-within:border-black/30 dark:border-white/0 dark:focus-within:border-white/30">
             <textarea
                 id={name}
                 name={name}

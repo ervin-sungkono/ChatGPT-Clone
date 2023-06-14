@@ -2,6 +2,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useState } from "react"
+import { useTheme } from "next-themes"
 import { initDropdowns } from "flowbite"
 
 import { AiOutlinePlus } from "@react-icons/all-files/ai/AiOutlinePlus"
@@ -15,9 +16,13 @@ export default function Sidebar({ chatId, chatHistory }){
     const [sortedChat, setSortedChat] = useState([])
     const [title, setTitle] = useState("")
     const [showSidebar, setShowSidebar] = useState(false)
+    const [mounted, setMounted] = useState(false)
+    const {theme, setTheme} = useTheme()
+    const toggleTheme = () => theme === 'light' ? setTheme('dark') : setTheme('light')
 
     useEffect(() => {
         initDropdowns()
+        setMounted(true)
     }, [])
 
     const compareDate = (date) => {
@@ -54,9 +59,13 @@ export default function Sidebar({ chatId, chatHistory }){
         setTitle(chatHistory.find(chat => chat.chatId === chatId)?.title)
     },[chatHistory])
 
+    if (!mounted) {
+        return null
+    }
+
     return(
         <section className="relative">
-            <div className="w-full fixed top-0 border-b border-b-white/20 bg-gray-800 p-2 flex md:hidden justify-between items-center gap-1 z-50">
+            <div className="w-full fixed top-0 border-b border-b-white/20 bg-gray-800 text-white p-2 flex md:hidden justify-between items-center gap-1 z-50">
                 <button className="p-1" onClick={() => setShowSidebar(true)}>
                     <AiOutlineMenu size={20}/>
                 </button>
@@ -65,16 +74,16 @@ export default function Sidebar({ chatId, chatHistory }){
                     <AiOutlinePlus size={20}/>
                 </Link>
             </div>
-            <div className={`fixed top-0 left-0 w-full h-full bg-gray-600/70 z-50 ${showSidebar ? "opacity-1": "opacity-0 pointer-events-none"} transition-opacity duration-300 md:hidden`}></div>
-            <div className={`absolute top-0 left-0 ${showSidebar ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 md:static w-[260px] h-screen flex flex-col gap-2 dark:bg-gray-900 p-2 z-50 group transition-transform duration-300`}>
-                <button className={`${showSidebar ? "opacity-1": "opacity-0 pointer-events-none"} absolute top-2 -right-2 translate-x-full z-50 p-[10px] focus:ring-2 ring-white flex justify-center items-center transition-opacity duration-300`} onClick={() => setShowSidebar(false)}>
+            <div className={`fixed top-0 left-0 w-full h-full bg-gray-600/70 z-40 ${showSidebar ? "opacity-1": "opacity-0 pointer-events-none"} transition-opacity duration-300 md:hidden`}></div>
+            <div className={`absolute top-0 left-0 ${showSidebar ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 md:static w-[260px] h-screen flex flex-col gap-2 bg-gray-900 p-2 z-50 group transition-transform duration-300`}>
+                <button className={`${showSidebar ? "opacity-1": "opacity-0 pointer-events-none"} absolute top-2 -right-2 translate-x-full z-50 p-[10px] focus:ring-2 ring-white text-white flex justify-center items-center transition-opacity duration-300`} onClick={() => setShowSidebar(false)}>
                     <AiOutlineClose size={20}/>
                 </button>
-                <Link href="/" className="w-full flex items-center gap-2 p-3 border dark:border-white/20 rounded-lg dark:hover:bg-white/5 transition-colors duration-300">
+                <Link href="/" className="w-full flex items-center gap-2 p-3 border text-white border-white/20 rounded-lg hover:bg-white/5 transition-colors duration-300">
                     <AiOutlinePlus size={16}/>
                     <p className="text-sm font-medium">New Chat</p>
                 </Link>
-                <div className="flex flex-col flex-grow overflow-y-auto -mr-2 border-b dark:border-b-white/20">
+                <div className="flex flex-col flex-grow overflow-y-scroll -mr-2">
                 {sortedChat && sortedChat.map(chats => chats.data.length > 0 && (
                     <div className="flex flex-col gap-2 h-auto" key={chats.label}>
                         <p className="text-xs text-gray-500 font-semibold pt-2 px-3 sticky top-0">{chats.label}</p>
@@ -86,10 +95,11 @@ export default function Sidebar({ chatId, chatHistory }){
                     </div>
                 ))}
                 </div> 
+                <hr className="border border-white/20"/>
                 <button 
                     id="profileDropdownButton"
                     data-dropdown-toggle="profileDropdown"
-                    className="flex justify-between items-center dark:hover:bg-gray-800 dark:text-white rounded-md px-[10px] py-3 transition-colors duration-300" 
+                    className="flex justify-between items-cente hover:bg-gray-800 text-white rounded-md px-[10px] py-3 transition-colors duration-300" 
                     type="button"
                 >
                     <div className="flex items-center gap-2">
@@ -98,19 +108,10 @@ export default function Sidebar({ chatId, chatHistory }){
                     </div>
                     <BsThreeDots size={16} className="text-gray-500"/>
                 </button>
-                <div id="profileDropdown" className="w-[244px] z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-black">
-                    <ul className="py-2 text-sm text-gray-700 dark:text-gray-200">
-                        <li>
-                            <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">Dashboard</a>
-                        </li>
-                        <li>
-                            <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">Settings</a>
-                        </li>
-                        <li>
-                            <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">Earnings</a>
-                        </li>
-                        <li>
-                            <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">Sign out</a>
+                <div id="profileDropdown" className="w-[244px] z-10 hidden divide-y divide-gray-100 rounded-lg shadow bg-gray-950">
+                    <ul className="py-2 text-sm text-gray-200">
+                        <li onClick={toggleTheme}>
+                            <a href="#" className="block px-4 py-2 hover:bg-gray-700 dark:hover:text-white">{theme === "light" ? "Dark Mode" : "Light Mode"}</a>
                         </li>
                     </ul>
                 </div>

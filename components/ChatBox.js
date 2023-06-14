@@ -4,7 +4,7 @@ import remarkGfm from "remark-gfm"
 import { LightAsync as SyntaxHighlighter } from "react-syntax-highlighter"
 import { vs2015 } from 'react-syntax-highlighter/dist/esm/styles/hljs'
 
-import { memo, useState } from "react"
+import { memo } from "react"
 // import CopyToClipboard from "react-copy-to-clipboard"
 
 function ChatBox({ role, content, streaming = false }){
@@ -14,7 +14,7 @@ function ChatBox({ role, content, streaming = false }){
     //     setTimeout(() => setCopied(false), 5000)
     // }
     return (
-        <div className={`w-full flex justify-center border-b dark:border-b-black/10 ${role === "user" ? "dark:bg-gray-800" : "dark:bg-gray-700"}`}>
+        <div className={`w-full flex justify-center border-b border-b-black/10 ${role === "user" ? "dark:bg-gray-800" : "bg-gray-50 dark:bg-gray-700"}`}>
             <div className="w-full flex p-4 md:py-6 items-start md:max-w-2xl lg:max-w-[38rem] xl:max-w-3xl gap-4 md:gap-6">
                 <div className="relative min-w-[32px] aspect-square rounded overflow-hidden">
                     {role === "user" ? 
@@ -22,7 +22,7 @@ function ChatBox({ role, content, streaming = false }){
                     : 
                     <Image src="/gpt_profile.png" alt="" fill className="object-cover"/>}
                 </div>
-                <div className={`markdown ${streaming ? 'streaming' : ""} flex flex-grow flex-col gap-4 text-sm md:text-base`}>
+                <div className={`markdown ${streaming ? 'streaming' : ""} flex flex-grow flex-col gap-4 text-sm text-gray-800 dark:text-white md:text-base`}>
                     <ReactMarkdown 
                         remarkPlugins={[remarkGfm]}
                         components={{

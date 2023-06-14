@@ -72,7 +72,7 @@ export default function IntroSection({ handleClick }){
                         <div className="w-full flex flex-col gap-3">
                             {introduction.data.map((entry, index) => (
                                 <div 
-                                    className={`w-full p-3 dark:bg-white/5 rounded-md text-sm text-center ${entry.interactionType === 'click' && "dark:hover:bg-gray-900 cursor-pointer"}`}
+                                    className={`w-full p-3 bg-gray-50 dark:bg-white/5 rounded-md text-sm text-center ${entry.interactionType === 'click' && "hover:bg-gray-200 dark:hover:bg-gray-900 cursor-pointer"}`}
                                     onClick={entry.interactionType === 'click' ? () => handleClick(entry.label) : null}
                                     key={index}
                                 >

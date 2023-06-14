@@ -8,7 +8,7 @@ const Button = dynamic(() => import("./Button"))
 
 export default function ChatInput({ onSubmit, regenerateMessage, showButton, loading, text, setText}){ 
     return(
-        <div className="w-full flex flex-col gap-2 md:gap-3 items-center absolute bottom-0 left-0 px-4 pb-3 md:pb-6 bg-gradient-to-t from-gray-800">
+        <div className="w-full flex flex-col gap-2 md:gap-3 items-center absolute bottom-0 left-0 px-4 pb-3 md:pb-6 bg-gradient-to-t from-gray-200 dark:from-gray-800">
             {showButton && <Button label={"Regenerate response"} icon={<FiRefreshCcw size={12}/>} onClick={loading ? null  : regenerateMessage}/>}
             <form 
                 onSubmit={onSubmit}
@@ -23,7 +23,7 @@ export default function ChatInput({ onSubmit, regenerateMessage, showButton, loa
                     disabled={loading}
                 />
             </form>
-            <p className="text-xs text-gray-300 text-center">
+            <p className="text-xs text-gray-700 dark:text-gray-300 text-center">
                 Educational purposes only, made by <span className="underline"><Link href={"https://github.com/ervin-sungkono"} target="_blank">Ervin Cahyadinata Sungkono.</Link></span> Original ChatGPT website <span className="underline"><Link href={"https://chat.openai.com"} target="_blank">here</Link></span>
             </p>
         </div>
