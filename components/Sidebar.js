@@ -22,8 +22,8 @@ export default function Sidebar({ chatId, chatHistory }){
 
     useEffect(() => {
         initDropdowns()
-        setMounted(true)
-    }, [])
+        if(!mounted) setMounted(true)
+    }, [mounted])
 
     const compareDate = (date) => {
         const then = new Date(date)
