@@ -1,6 +1,6 @@
 import { createParser } from "eventsource-parser";
 
-const url = "https://api.pawan.krd/v1/chat/completions"
+const url = process.env.API_URL
 const options = {
     method: 'POST',
     headers: {
