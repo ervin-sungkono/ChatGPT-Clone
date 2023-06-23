@@ -31,13 +31,14 @@ function ChatBox({ role, content, streaming = false }){
                               return !inline && match ? 
                                 (<SyntaxHighlighter
                                     {...props}
-                                    children={String(children).replace(/\n$/, '')}
                                     style={vs2015}
                                     language={match[1]}
                                     PreTag="div"
                                     wrapLongLines
                                     customStyle={{borderRadius: '6px'}}
-                                />)
+                                >
+                                    {String(children).replace(/\n$/, '')}
+                                </SyntaxHighlighter>)
                                 : 
                                 (<code {...props} className={className}>
                                     {children}
