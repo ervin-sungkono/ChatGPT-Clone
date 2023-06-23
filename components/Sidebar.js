@@ -76,7 +76,7 @@ export default function Sidebar({ chatId, chatHistory }){
             </div>
             <div className={`fixed top-0 left-0 w-full h-full bg-gray-600/70 z-40 ${showSidebar ? "opacity-1": "opacity-0 pointer-events-none"} transition-opacity duration-300 md:hidden`}></div>
             <div className={`absolute top-0 left-0 ${showSidebar ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 md:static w-[260px] h-screen flex flex-col gap-2 bg-gray-900 p-2 z-50 group transition-transform duration-300`}>
-                <button className={`${showSidebar ? "opacity-1": "opacity-0 pointer-events-none"} absolute top-2 -right-2 translate-x-full z-50 p-[10px] focus:ring-2 ring-white text-white flex justify-center items-center transition-opacity duration-300`} onClick={() => setShowSidebar(false)}>
+                <button className={`${showSidebar ? "opacity-1": "opacity-0 pointer-events-none"} absolute top-2 -right-2 translate-x-full z-50 p-2.5 focus:ring-2 ring-white text-white flex justify-center items-center transition-opacity duration-300`} onClick={() => setShowSidebar(false)}>
                     <AiOutlineClose size={20}/>
                 </button>
                 <Link href="/" className="w-full flex items-center gap-2 p-3 border text-white border-white/20 rounded-lg hover:bg-white/5 transition-colors duration-300">
@@ -99,7 +99,7 @@ export default function Sidebar({ chatId, chatHistory }){
                 <button 
                     id="profileDropdownButton"
                     data-dropdown-toggle="profileDropdown"
-                    className="flex justify-between items-cente hover:bg-gray-800 text-white rounded-md px-[10px] py-3 transition-colors duration-300" 
+                    className="flex justify-between items-cente hover:bg-gray-800 text-white rounded-md px-2.5 py-3 transition-colors duration-300" 
                     type="button"
                 >
                     <div className="flex items-center gap-2">
