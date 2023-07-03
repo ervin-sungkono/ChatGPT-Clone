@@ -8,7 +8,7 @@ export default function Page({ params }){
     const [chatHistory, setChatHistory] = useLocalStorage('chat-history', [])
     return(
         <main className="flex">
-            <Sidebar chatId={params.id} chatHistory={chatHistory}/>
+            <Sidebar chatId={params.id} chatHistory={chatHistory} setChatHistory={setChatHistory}/>
             <ChatLayout chatId={params.id} chatHistory={chatHistory} setChatHistory={setChatHistory}/>
         </main>
     )

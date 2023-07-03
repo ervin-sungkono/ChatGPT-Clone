@@ -12,7 +12,7 @@ import { BsThreeDots } from "@react-icons/all-files/bs/BsThreeDots"
 
 import ChatLink from "./ChatLink"
 
-export default function Sidebar({ chatId, chatHistory }){
+export default function Sidebar({ chatId, chatHistory, setChatHistory }){
     const [sortedChat, setSortedChat] = useState([])
     const [title, setTitle] = useState("")
     const [showSidebar, setShowSidebar] = useState(false)
@@ -33,6 +33,24 @@ export default function Sidebar({ chatId, chatHistory }){
         const daysBetweenDates = Math.abs(Math.floor(then.getTime()/msDay) - Math.floor(now.getTime()/msDay))
 
         return daysBetweenDates
+    }
+
+    const editAction = (chatId, newTitle) => {
+        const newChats = chatHistory.map(chat => {
+            if(chat.chatId === chatId){
+                return {
+                    ...chat,
+                    title: newTitle
+                }
+            }
+            return chat
+        })
+        setChatHistory(newChats)
+    }
+
+    const deleteAction = (chatId) => {
+        const newChats = chatHistory.filter(chat => chat.chatId !== chatId)
+        setChatHistory(newChats)
     }
 
     useEffect(() => {
@@ -89,7 +107,7 @@ export default function Sidebar({ chatId, chatHistory }){
                         <p className="text-xs text-gray-500 font-semibold pt-2 px-3 sticky top-0">{chats.label}</p>
                         <div className="flex flex-col">
                             {chats.data.map(chat => (
-                                <ChatLink chat={chat} active={chat.chatId === chatId} key={chat.chatId}/>
+                                <ChatLink chatId={chat.chatId} title={chat.title} active={chat.chatId === chatId} editAction={editAction} deleteAction={deleteAction} key={chat.chatId}/>
                             ))}
                         </div>
                     </div>
