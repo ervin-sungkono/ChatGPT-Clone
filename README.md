@@ -1,34 +1,49 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# ChatGPT Clone Website
+A clone of the original ChatGPT Website, using localStorage features instead of database to store chat history.
 
-## Getting Started
+**This project is for educational purposes only.**
 
-First, run the development server:
+## Resources
+- [Next.js v13](https://nextjs.org)
+- [Next Themes](https://www.npmjs.com/package/next-themes)
+- [ChatGPT API](https://platform.openai.com/docs/api-reference)
+- [Tailwind CSS](https://tailwindcss.com/)
 
-```bash
+## Key Features
+1. Handling server sent events using ReadableStream
+2. Light & Dark Theme
+3. Reading .txt file input
+4. Save chat history using localStorage
+5. Markdown support
+
+## Preview Image
+Light Mode
+![](./public/preview_img_light.png)
+
+Dark Mode
+![](./public/preview_img.png)
+
+## Installation and Setup
+1. Clone this repository
+```sh
+git clone https://github.com/ervin-sungkono/ChatGPT-Clone.git
+```
+2. Setup env variables
+```sh
+cp .env.example .env
+```
+| Variable | Description |
+| :--- | :--- |
+| `API_URL` | Your OpenAI API endpoint |
+| `OPENAI_KEY` | Your OpenAI API key |
+
+3. Install dependency
+```sh
+npm install
+```
+4. Run the app
+```sh
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+This project is deployed using Vercel, [click here](https://chatgpt-clone-ervin-sungkono.vercel.app/) to see the result.
