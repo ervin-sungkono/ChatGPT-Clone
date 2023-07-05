@@ -43,7 +43,7 @@ const ChatLink = ({ chatId, title, active, editAction, deleteAction }) => {
     return(
         <Link href={`/chat/${chatId}`} className="group/link" aria-current="page">
             <div 
-                className={`flex items-center px-3 py-3 gap-2 rounded-md ${active ? "bg-gray-800" : "dark:hover:bg-gray-800/50"} text-white`}
+                className={`flex items-center px-3 py-3 gap-2 rounded-md ${active ? "bg-gray-800" : "hover:bg-gray-800/50"} text-white`}
             >
                 <div className="p-1">
                     {renderIcon()}
