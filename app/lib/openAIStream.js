@@ -5,7 +5,7 @@ const options = {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json',
-        'Authorization': `${process.env.OPENAI_KEY}`
+        'Authorization': `Bearer ${process.env.OPENAI_KEY}`
     }
 }
   
