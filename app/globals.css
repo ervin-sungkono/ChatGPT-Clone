@@ -33,6 +33,7 @@
 .markdown ul,
 .markdown menu{
     list-style: initial;
+    padding-left: 20px;
 }
 
 @layer components{
