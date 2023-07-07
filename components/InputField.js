@@ -6,9 +6,7 @@ import { AiFillFileText as TxtIcon } from "@react-icons/all-files/ai/AiFillFileT
 import { IoSend as SendIcon } from "@react-icons/all-files/io5/IoSend"
 import { useEffect, useRef } from "react"
 
-import Dictaphone from "./Dictaphone"
-
-export default function InputField({ name, value, setValue, placeholder, autoFocus = false, disabled = false }){
+export default function InputField({ name, value, setValue, placeholder, autoFocus = false, disabled = false, disableInput = false }){
     const textAreaRef = useRef()
     const uploadTxt = () => {
         const fileInput = document.createElement('input')
@@ -39,6 +37,7 @@ export default function InputField({ name, value, setValue, placeholder, autoFoc
                 ref={textAreaRef}
                 placeholder={placeholder}
                 value={value}
+                disabled={disableInput}
                 rows={1}
                 data-min-rows="1"
                 className="auto_expand bg-transparent w-full p-0 pr-20 border-none focus:ring-0 resize-none h-auto md:max-h-[200px] text-sm md:text-base"
@@ -58,9 +57,6 @@ export default function InputField({ name, value, setValue, placeholder, autoFoc
             <div className="absolute right-2 md:right-3 bottom-1.5 md:bottom-3 flex gap-1 md:gap-2">
                 <Tooltip content={"Add .txt file"}>
                     <button type="button" className="p-2 hover:bg-gray-300 dark:hover:bg-gray-900 rounded-md text-gray-600 dark:text-gray-400 transition-colors duration-200" onClick={uploadTxt}><TxtIcon size={16}/></button>
-                </Tooltip>
-                <Tooltip content={"Text using your voice"}>
-                    <Dictaphone/>
                 </Tooltip>
                 <Tooltip content={"Send message"}>
                     <button
