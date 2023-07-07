@@ -15,6 +15,11 @@ A clone of the original ChatGPT Website, using localStorage features instead of 
 3. Reading .txt file input
 4. Save chat history using localStorage
 5. Markdown support
+6. [v1.1] Speech Recognition API for converting voice into chats
+
+## Upcoming Features
+- PDF to Text support
+- Copy text to clipboard
 
 ## Preview Image
 Light Mode
@@ -36,6 +41,7 @@ cp .env.example .env
 | :--- | :--- |
 | `API_URL` | Your OpenAI API endpoint |
 | `OPENAI_KEY` | Your OpenAI API key |
+| `NEXT_PUBLIC_SPEECHLY_APP_ID` | For speech to text, you can get it [here](https://www.speechly.com/) |
 
 3. Install dependency
 ```sh
