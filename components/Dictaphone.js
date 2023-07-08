@@ -7,8 +7,10 @@ import { createSpeechlySpeechRecognition } from '@speechly/speech-recognition-po
 import { BsFillMicFill } from "react-icons/bs"
 
 const speechlyAppId = process.env.NEXT_PUBLIC_SPEECHLY_APP_ID
-const SpeechlySpeechRecognition = createSpeechlySpeechRecognition(speechlyAppId)
-SpeechRecognition.applyPolyfill(SpeechlySpeechRecognition)
+if(speechlyAppId){
+  const SpeechlySpeechRecognition = createSpeechlySpeechRecognition(speechlyAppId)
+  SpeechRecognition.applyPolyfill(SpeechlySpeechRecognition)
+}
 
 export default function Dictaphone({ setPreviewSpeech, handleSpeechEnd }){
   const {

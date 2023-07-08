@@ -41,7 +41,7 @@ cp .env.example .env
 | :--- | :--- |
 | `API_URL` | Your OpenAI API endpoint |
 | `OPENAI_KEY` | Your OpenAI API key |
-| `NEXT_PUBLIC_SPEECHLY_APP_ID` | For speech to text, you can get it [here](https://www.speechly.com/) |
+| `NEXT_PUBLIC_SPEECHLY_APP_ID` | For speech to text polyfill (optional but recommended), you can get it [here](https://www.speechly.com/) |
 
 3. Install dependency
 ```sh
