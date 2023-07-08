@@ -29,7 +29,7 @@ export default function ChatInput({ onSubmit, regenerateMessage, showButton, loa
                         setValue={setText}
                         placeholder={"Send a message.."}
                         autoFocus
-                        disabled={loading}
+                        disabled={loading || previewSpeech.length}
                         disableInput={previewSpeech.length}
                     />
                 </form>
