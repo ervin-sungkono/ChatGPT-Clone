@@ -60,7 +60,7 @@ export default function IntroSection({ handleClick }){
         }
     ]
     return(
-        <div className="w-full h-full mx-auto md:max-w-2xl lg:max-w-3xl flex flex-col gap-12 md:gap-16 px-6 pt-16 md:pt-[20vh] items-center">
+        <div className="w-full h-auto mx-auto md:max-w-2xl lg:max-w-3xl flex flex-col gap-12 md:gap-16 px-6 pt-16 md:pt-[20vh] items-center">
             <h2 className="text-4xl font-bold">ChatGPT</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-4">
                 {introductions.map(introduction => (
@@ -83,7 +83,6 @@ export default function IntroSection({ handleClick }){
                     </div>
                 ))}
             </div>
-            <div className="md:hidden h-32 md:h-48 flex-shrink-0"></div>
         </div>
     )
 }
