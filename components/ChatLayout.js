@@ -137,7 +137,7 @@ export default function ChatLayout({ chatId, chatHistory, setChatHistory }){
     }
 
     return(
-        <section className="relative flex flex-col flex-grow h-screen overflow-x-hidden dark:bg-gray-800">
+        <section className="relative flex flex-col flex-grow h-full overflow-x-hidden dark:bg-gray-800">
             <div className="relative w-full h-full">
                 <div className="w-full h-full flex flex-col overflow-y-auto" onScroll={checkBottom}>
                     <div className="h-[44px] block md:hidden flex-shrink-0"></div>

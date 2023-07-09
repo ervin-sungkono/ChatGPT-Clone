@@ -93,7 +93,7 @@ export default function Sidebar({ chatId, chatHistory, setChatHistory }){
                 </Link>
             </div>
             <div className={`fixed top-0 left-0 w-full h-full bg-gray-600/70 z-40 ${showSidebar ? "opacity-1": "opacity-0 pointer-events-none"} transition-opacity duration-300 md:hidden`}></div>
-            <div className={`absolute top-0 left-0 ${showSidebar ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 md:static w-[260px] h-screen flex flex-col gap-2 bg-gray-900 p-2 z-50 group transition-transform duration-300`}>
+            <div className={`absolute top-0 left-0 ${showSidebar ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 md:static w-[260px] h-full flex flex-col gap-2 bg-gray-900 p-2 z-50 group transition-transform duration-300`}>
                 <button className={`${showSidebar ? "opacity-1": "opacity-0 pointer-events-none"} absolute top-2 -right-2 translate-x-full z-50 p-2.5 focus:ring-2 ring-white text-white flex justify-center items-center transition-opacity duration-300`} onClick={() => setShowSidebar(false)}>
                     <AiOutlineClose size={20}/>
                 </button>
