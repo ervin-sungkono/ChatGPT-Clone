@@ -59,7 +59,7 @@ export default function Sidebar({ chatId, chatHistory, setChatHistory }){
         const lastWeekChat = []
         const lastMonthChat = []
         const olderChat = []
-        chatHistory.forEach(chat => {
+        chatHistory.sort((a, b) => a.created - b.created).forEach(chat => {
             const days = compareDate(chat.created)
             if(days === 0) todayChat.push(chat)
             else if(days === 1) yesterdayChat.push(chat)
