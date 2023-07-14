@@ -13,3 +13,14 @@ export const getChatResponse = async(messages) => {
 
     return response.body
 }
+
+export const getParsedPdf = async(formData) => {
+    const response = await fetch("/api/pdf-to-text",{
+        method: "POST",
+        body: formData
+    })
+    .then(res => res.status === 400 ? "" : res.json())
+    .catch(err => console.log(err))
+
+    return response
+}

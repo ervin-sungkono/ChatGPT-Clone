@@ -12,13 +12,13 @@ A clone of the original ChatGPT Website, using localStorage features instead of 
 ## Key Features
 1. Handling server sent events using ReadableStream
 2. Light & Dark Theme
-3. Reading .txt file input
+3. Convert .txt to text input
 4. Save chat history using localStorage
 5. Markdown support
-6. [v1.1] Speech Recognition API for converting voice into chats
+6. [v1.1.0] Speech Recognition API for converting voice into chats
+7. [v1.2.0] Convert .pdf to text input
 
 ## Upcoming Features
-- PDF to Text support
 - Copy text to clipboard
 
 ## Preview Image

@@ -1,5 +1,6 @@
 "use client"
 import { onExpandableTextareaInput } from "@/app/lib/textarea-expandable"
+import { getParsedPdf } from "@/app/lib/api"
 
 import Tooltip from "./Tooltip"
 import { AiFillFileText as TxtIcon } from "react-icons/ai"
@@ -11,17 +12,26 @@ export default function InputField({ name, value, setValue, placeholder, autoFoc
     const uploadTxt = () => {
         const fileInput = document.createElement('input')
         fileInput.type = 'file'
-        fileInput.accept = '.txt'
+        fileInput.accept = '.txt, .pdf'
         fileInput.multiple = true
+        fileInput.formEnctype = "multipart/form-data"
         fileInput.onchange = _ => {
-            console.log(fileInput.files)
             const files =  Array.from(fileInput.files)
-            files.forEach((file, index)=> {
-                const reader = new FileReader()
-                reader.onload = () => {
-                    setValue(prevValue => `${prevValue}${index > 0 ? "\n" : ""}${reader.result.trim()}`)
+            files.forEach(async(file, index)=> {
+                if(file.type === "application/pdf") {
+                    if(file.size > 5242880) return
+                    const formData = new FormData()
+                    formData.append("pdfFile", file)
+                    const extractedText = await getParsedPdf(formData).then(res => res.text)
+                    setValue(prevValue => `${prevValue}${index > 0 ? "\n" : ""}${extractedText.trim()}`)
                 }
-                if(file) reader.readAsText(file)
+                else{
+                    const reader = new FileReader()
+                    reader.onload = () => {
+                        setValue(prevValue => `${prevValue}${index > 0 ? "\n" : ""}${reader.result.trim()}`)
+                    }
+                    if(file) reader.readAsText(file)
+                }
             })
         }
         fileInput.click()
@@ -55,7 +65,7 @@ export default function InputField({ name, value, setValue, placeholder, autoFoc
             >
             </textarea>
             <div className="absolute right-2 md:right-3 bottom-1.5 md:bottom-3 flex gap-1 md:gap-2">
-                <Tooltip content={"Add .txt file"}>
+                <Tooltip content={"Add .txt or .pdf max(5MB)"}>
                     <button type="button" className="p-2 hover:bg-gray-300 dark:hover:bg-gray-900 rounded-md text-gray-600 dark:text-gray-400 transition-colors duration-200" onClick={uploadTxt}><TxtIcon size={16}/></button>
                 </Tooltip>
                 <Tooltip content={"Send message"}>

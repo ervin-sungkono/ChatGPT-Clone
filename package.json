@@ -1,6 +1,6 @@
 {
   "name": "chatgpt-clone",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "private": true,
   "author": {
     "name": "Ervin Cahyadinata Sungkono",
@@ -22,6 +22,7 @@
     "lru-cache": "^9.1.1",
     "next": "13.4.4",
     "next-themes": "^0.2.1",
+    "pdf-parse": "^1.1.1",
     "react": "18.2.0",
     "react-copy-to-clipboard": "^5.1.0",
     "react-dom": "18.2.0",
