@@ -2,8 +2,8 @@
 import { onExpandableTextareaInput } from "@/app/lib/textarea-expandable"
 
 import Tooltip from "./Tooltip"
-import { AiFillFileText as TxtIcon } from "@react-icons/all-files/ai/AiFillFileText"
-import { IoSend as SendIcon } from "@react-icons/all-files/io5/IoSend"
+import { AiFillFileText as TxtIcon } from "react-icons/ai"
+import { IoSend as SendIcon } from "react-icons/io5"
 import { useEffect, useRef } from "react"
 
 export default function InputField({ name, value, setValue, placeholder, autoFocus = false, disabled = false, disableInput = false }){

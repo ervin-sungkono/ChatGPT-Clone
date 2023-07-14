@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import { useState, useEffect, useRef } from "react"
 import { getChatResponse } from "@/app/lib/api"
 
-import { BiArrowToBottom } from "@react-icons/all-files/bi/BiArrowToBottom"
+import { BiArrowToBottom } from "react-icons/bi"
 
 const ChatBox = dynamic(() => import("./ChatBox"))
 const ChatInput = dynamic(() => import("./ChatInput"))

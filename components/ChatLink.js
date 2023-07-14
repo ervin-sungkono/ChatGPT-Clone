@@ -1,11 +1,7 @@
 import Link from "next/link"
 import { useState, memo, useEffect } from "react"
 
-import { AiOutlineMessage } from "@react-icons/all-files/ai/AiOutlineMessage"
-import { AiOutlineEdit } from "@react-icons/all-files/ai/AiOutlineEdit"
-import { AiOutlineDelete } from "@react-icons/all-files/ai/AiOutlineDelete"
-import { AiOutlineCheck } from "@react-icons/all-files/ai/AiOutlineCheck"
-import { AiOutlineClose } from "@react-icons/all-files/ai/AiOutlineClose"
+import { AiOutlineMessage, AiOutlineEdit, AiOutlineDelete, AiOutlineCheck, AiOutlineClose } from "react-icons/ai"
 
 const ChatLink = ({ chatId, title, active, editAction, deleteAction }) => {
     const [action, setAction] = useState("")

@@ -2,7 +2,7 @@ import dynamic from "next/dynamic"
 import Link from "next/link"
 import { useState } from "react"
 
-import { FiRefreshCcw } from "@react-icons/all-files/fi/FiRefreshCcw"
+import { FiRefreshCcw } from "react-icons/fi"
 
 const InputField = dynamic(() => import("./InputField"))
 const Button = dynamic(() => import("./Button"))

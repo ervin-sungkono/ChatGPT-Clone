@@ -5,10 +5,8 @@ import { useEffect, useState } from "react"
 import { useTheme } from "next-themes"
 import { initDropdowns } from "flowbite"
 
-import { AiOutlinePlus } from "@react-icons/all-files/ai/AiOutlinePlus"
-import { AiOutlineMenu } from "@react-icons/all-files/ai/AiOutlineMenu"
-import { AiOutlineClose } from "@react-icons/all-files/ai/AiOutlineClose"
-import { BsThreeDots } from "@react-icons/all-files/bs/BsThreeDots"
+import { AiOutlinePlus, AiOutlineMenu, AiOutlineClose } from "react-icons/ai"
+import { BsThreeDots } from "react-icons/bs"
 
 import ChatLink from "./ChatLink"
 

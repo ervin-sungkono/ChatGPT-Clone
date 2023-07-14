@@ -1,6 +1,5 @@
-import { BsSun as SunIcon } from "@react-icons/all-files/bs/BsSun"
-import { BsLightningFill as LightningIcon } from "@react-icons/all-files/bs/BsLightningFill"
-import { AiFillWarning as WarningIcon } from "@react-icons/all-files/ai/AiFillWarning"
+import { BsSun as SunIcon, BsLightningFill as LightningIcon } from "react-icons/bs"
+import { AiFillWarning as WarningIcon } from "react-icons/ai"
 
 export default function IntroSection({ handleClick }){
     const introductions = [
