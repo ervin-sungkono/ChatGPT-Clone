@@ -1,10 +1,6 @@
 import { NextResponse } from "next/server"
 import pdf from 'pdf-parse/lib/pdf-parse'
 
-export const api = {
-    bodyParser: false
-}
-
 export async function POST(request){
     const formData = await request.formData()
     const pdfFile = formData.get('pdfFile')
